@@ -5,14 +5,11 @@ import android.content.Context;
 import com.example.themoviedb.BuildConfig;
 import com.example.themoviedb.interfaces.Movies;
 
-import java.io.File;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -29,8 +26,8 @@ public class RetrofitClient {
 
     private RetrofitClient(Context context) {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.cache(cache(context));
-        httpClient.addInterceptor(offlineInterceptor(context));
+//        httpClient.cache(cache(context));
+//        httpClient.addInterceptor(offlineInterceptor(context));
         httpClient.addNetworkInterceptor(networkInterceptor()); // only used when network is on
 
         if (BuildConfig.DEBUG) {
@@ -60,7 +57,7 @@ public class RetrofitClient {
         return chain -> {
             Response response = chain.proceed(chain.request());
             CacheControl cacheControl = new CacheControl.Builder()
-                    .maxAge(30, TimeUnit.SECONDS) // Cache the response only for 30 sec, so if a request comes within 30sec it will show from cache
+                    .maxAge(5, TimeUnit.SECONDS) // Cache the response only for 30 sec, so if a request comes within 30sec it will show from cache
                     .build();
             return response.newBuilder()
                     .removeHeader(HEADER_PRAGMA)
@@ -70,30 +67,30 @@ public class RetrofitClient {
         };
     }
 
-    private Cache cache(Context context) {
-        return new Cache(new File(context.getCacheDir(), "MovieDbResponseCache"), cacheSize);
-    }
-
-    /**
-     * This interceptor will be called both if the network is available and the network is not available
-     */
-    private Interceptor offlineInterceptor(Context context) {
-        return chain -> {
-            Request request = chain.request();
-            if (!Utility.hasNetwork(context)) { // makes the network is not available only
-                CacheControl cacheControl = new CacheControl.Builder()
-                        .maxStale(5, TimeUnit.DAYS)
-                        .build();
-
-                request = request.newBuilder()
-                        .removeHeader(HEADER_PRAGMA)
-                        .removeHeader(HEADER_CACHE_CONTROL)
-                        .cacheControl(cacheControl)
-                        .build();
-            }
-            return chain.proceed(request);
-        };
-    }
+//    private Cache cache(Context context) {
+//        return new Cache(new File(context.getCacheDir(), "MovieDbResponseCache"), cacheSize);
+//    }
+//
+//    /**
+//     * This interceptor will be called both if the network is available and the network is not available
+//     */
+//    private Interceptor offlineInterceptor(Context context) {
+//        return chain -> {
+//            Request request = chain.request();
+//            if (!Utility.hasNetwork(context)) { // makes the network is not available only
+//                CacheControl cacheControl = new CacheControl.Builder()
+//                        .maxStale(5, TimeUnit.DAYS)
+//                        .build();
+//
+//                request = request.newBuilder()
+//                        .removeHeader(HEADER_PRAGMA)
+//                        .removeHeader(HEADER_CACHE_CONTROL)
+//                        .cacheControl(cacheControl)
+//                        .build();
+//            }
+//            return chain.proceed(request);
+//        };
+//    }
 
     public Movies getNowPlayingMovies() {
         return retrofit.create(Movies.class);

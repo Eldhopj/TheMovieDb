@@ -6,18 +6,24 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.themoviedb.models.ApiResponse;
-import com.example.themoviedb.repo.MovieRepo;
+import com.example.themoviedb.models.MovieList;
+import com.example.themoviedb.repo.MovieLocalRepo;
+import com.example.themoviedb.repo.MovieNetworkRepo;
+
+import java.util.List;
 
 public class MovieViewModel extends AndroidViewModel {
-    private final MovieRepo movieRepo;
+    private final MovieNetworkRepo movieNetworkRepo;
+    private final MovieLocalRepo movieLocalRepo;
 
     public MovieViewModel(@NonNull Application application) {
         super(application);
-        movieRepo = MovieRepo.getInstance(application);
+        movieNetworkRepo = MovieNetworkRepo.getInstance(application);
+        movieLocalRepo = MovieLocalRepo.getInstance(application);
     }
 
-    public LiveData<ApiResponse> getUsersResponse(String locale, int page) {
-        return movieRepo.getNowPlayingMovies(locale, page);
+    public LiveData<List<MovieList>> getMovieResponse(String locale, int page) {
+        movieNetworkRepo.getNowPlayingMovies(locale, page);
+        return movieLocalRepo.getMovies();
     }
 }

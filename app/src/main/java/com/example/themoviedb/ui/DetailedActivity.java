@@ -7,8 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.example.themoviedb.R;
+import com.example.themoviedb.commonItems.Constants;
 import com.example.themoviedb.commonItems.IntentConstants;
-import com.example.themoviedb.commonItems.StringConstants;
 import com.example.themoviedb.commonItems.Utility;
 import com.example.themoviedb.databinding.ActivityDetailedBinding;
 import com.example.themoviedb.models.MovieList;
@@ -25,7 +25,7 @@ public class DetailedActivity extends AppCompatActivity {
 
     private void getExtras() {
         Intent intent = getIntent();
-        MovieList movieList = intent.getParcelableExtra(IntentConstants.MOVIE_DETAIL); //The values inside the clicked item object is in the clicked item
+        MovieList movieList = (MovieList) intent.getSerializableExtra(IntentConstants.MOVIE_DETAIL); //The values inside the clicked item object is in the clicked item
         setData(movieList);
     }
 
@@ -34,6 +34,6 @@ public class DetailedActivity extends AppCompatActivity {
 
         Utility.loadImageUsingGlide(getApplicationContext(),
                 binding.movieImage,
-                StringConstants.IMAGE_PREFIX + movieList.getPosterPath());
+                Constants.IMAGE_PREFIX + movieList.getPosterPath());
     }
 }

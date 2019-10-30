@@ -10,6 +10,9 @@
             type="com.example.themoviedb.models.MovieList" />
     </data>
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -52,5 +55,6 @@
             app:layout_constraintTop_toBottomOf="@+id/movieName"
             tools:text="MovieDescription" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </layout>

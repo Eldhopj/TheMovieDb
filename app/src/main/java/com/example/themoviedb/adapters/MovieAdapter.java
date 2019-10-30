@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.themoviedb.commonItems.StringConstants;
+import com.example.themoviedb.commonItems.Constants;
 import com.example.themoviedb.commonItems.Utility;
 import com.example.themoviedb.databinding.MovieListItemBinding;
 import com.example.themoviedb.interfaces.OnMovieItemAdapterListener;
@@ -69,7 +69,7 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             userViewHolder.bind(movie);
             Utility.loadImageUsingGlide(mContext,
                     userViewHolder.getBinding().movieImageIv,
-                    StringConstants.IMAGE_PREFIX + movie.getPosterPath());
+                    Constants.IMAGE_PREFIX + movie.getPosterPath());
         }
     }
 
