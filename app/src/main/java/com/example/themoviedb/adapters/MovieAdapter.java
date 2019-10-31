@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.paging.PagedListAdapter;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.themoviedb.commonItems.Constants;
@@ -17,18 +19,25 @@ import com.example.themoviedb.viewHolder.MoviesViewHolder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MovieAdapter extends PagedListAdapter<MovieList, RecyclerView.ViewHolder> {
 
 
     private final List<MovieList> mListItems = new ArrayList<>();
     private final Context mContext;
     private OnMovieItemAdapterListener mListener;
 
+    private static DiffUtil.ItemCallback<MovieList> DIFF_CALLBACK = new DiffUtil.ItemCallback<MovieList>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull MovieList oldItem, @NonNull MovieList newItem) {
+            return oldItem.getId().equals(newItem.getId());
+        }
 
-    //constructor
-    public MovieAdapter(Context context) {
-        this.mContext = context;
-    }
+        @Override
+        public boolean areContentsTheSame(@NonNull MovieList oldItem, @NonNull MovieList newItem) {
+            return oldItem.getTitle().equals(newItem.getTitle());
+        }
+    };
+
 
     public void setOnItemClickListener(OnMovieItemAdapterListener listener) {
         mListener = listener;
@@ -76,6 +85,11 @@ public class MovieAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public int getItemCount() {
         return mListItems.size();
+    }
+
+    protected MovieAdapter(Context context) {
+        super(DIFF_CALLBACK);
+        this.mContext = context;
     }
 
     //-------------------------------------Manipulating RecyclerView--------------------------------//
