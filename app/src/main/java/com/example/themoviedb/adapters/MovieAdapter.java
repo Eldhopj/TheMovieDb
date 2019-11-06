@@ -87,7 +87,7 @@ public class MovieAdapter extends PagedListAdapter<MovieList, RecyclerView.ViewH
         return mListItems.size();
     }
 
-    protected MovieAdapter(Context context) {
+    public MovieAdapter(Context context) {
         super(DIFF_CALLBACK);
         this.mContext = context;
     }
@@ -97,14 +97,6 @@ public class MovieAdapter extends PagedListAdapter<MovieList, RecyclerView.ViewH
         if (!mListItems.isEmpty()) {
             mListItems.clear();
             notifyDataSetChanged();
-        }
-    }
-
-    public void addItemRange(List<MovieList> items) {
-        if (items != null) {
-            int position = mListItems.size();
-            mListItems.addAll(position, items);
-            notifyItemRangeInserted(position, items.size());
         }
     }
 }

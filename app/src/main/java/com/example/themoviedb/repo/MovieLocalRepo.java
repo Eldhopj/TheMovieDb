@@ -3,8 +3,6 @@ package com.example.themoviedb.repo;
 import android.app.Application;
 import android.os.AsyncTask;
 
-import androidx.lifecycle.LiveData;
-
 import com.example.themoviedb.commonItems.RoomClient;
 import com.example.themoviedb.interfaces.MovieDao;
 import com.example.themoviedb.models.MovieList;
@@ -29,7 +27,7 @@ public class MovieLocalRepo {
         return repoInstance;
     }
 
-    public LiveData<List<MovieList>> getMovies() {
+    public List<MovieList> getMovies() {
         return movieDao.getAllData();
     }
 

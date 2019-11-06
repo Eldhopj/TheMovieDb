@@ -1,6 +1,5 @@
 package com.example.themoviedb.interfaces;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -21,5 +20,5 @@ public interface MovieDao {
 
 
     @Query("SELECT * FROM movie_table")
-    LiveData<List<MovieList>> getAllData();// Observe the object , so if there is any changes in the table this value will be auto updated and the activity will be notified
+    List<MovieList> getAllData();// Observe the object , so if there is any changes in the table this value will be auto updated and the activity will be notified
 }

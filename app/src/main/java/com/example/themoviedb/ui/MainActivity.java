@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements OnMovieItemAdapte
 
     private void fetchMovieApi(final int page) {
         viewModel.getMovieResponse("en-US", page).observe(this, movieLists -> {
-            movieAdapter.addItemRange(movieLists);
+            movieAdapter.submitList(movieLists);
             binding.swipeRefresh.setRefreshing(false);
         });
     }
