@@ -172,4 +172,6 @@ public class MovieList implements Serializable {
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
     }
+
+
 }
